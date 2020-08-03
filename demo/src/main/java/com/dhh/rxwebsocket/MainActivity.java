@@ -1,7 +1,6 @@
 package com.dhh.rxwebsocket;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -9,7 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.dhh.rxlifecycle2.RxLifecycle;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.dhh.websocket.Config;
 import com.dhh.websocket.RxWebSocket;
 import com.dhh.websocket.WebSocketInfo;
@@ -19,10 +20,11 @@ import com.dhh.websocket.WebSocketSubscriber2;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import okhttp3.WebSocket;
@@ -46,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
 
-
         //init config
         Config config = new Config.Builder()
                 .setShowLog(true)           //show  log
@@ -62,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         // use WebSocketSubscriber
         RxWebSocket.get("ws://10.7.5.88:8089/status")
                 //RxLifecycle : https://github.com/dhhAndroid/RxLifecycle
-                .compose(RxLifecycle.with(this).<WebSocketInfo>bindToLifecycle())
                 .subscribe(new WebSocketSubscriber() {
                     @Override
                     public void onOpen(@NonNull WebSocket webSocket) {
@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
          * 请使用 {@link  WebSocketSubscriber2}，仅需要将泛型传入即可
          */
         RxWebSocket.get("your url")
-                .compose(RxLifecycle.with(this).<WebSocketInfo>bindToLifecycle())
                 .subscribe(new WebSocketSubscriber2<List<String>>() {
                     @Override
                     protected void onMessage(List<String> strings) {
@@ -137,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         RxWebSocket.get("url")
-                .compose(RxLifecycle.with(this).<WebSocketInfo>bindToLifecycle())
                 .subscribe(new WebSocketSubscriber() {
                     @Override
                     protected void onMessage(@NonNull String text) {
@@ -147,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
 
         RxWebSocket.get("your url")
                 //RxLifecycle : https://github.com/dhhAndroid/RxLifecycle
-                .compose(RxLifecycle.with(this).<WebSocketInfo>bindToLifecycle())
                 .subscribe(new WebSocketSubscriber() {
                     @Override
                     public void onOpen(@NonNull WebSocket webSocket) {
@@ -241,7 +238,6 @@ public class MainActivity extends AppCompatActivity {
         //注意取消订阅,有多种方式,比如 rxlifecycle
         mDisposable = RxWebSocket.get(url)
                 // RxLifeCycle: https://github.com/dhhAndroid/RxLifecycle
-                .compose(RxLifecycle.with(this).<WebSocketInfo>bindOnDestroy())
                 .subscribe(new Consumer<WebSocketInfo>() {
                     @Override
                     public void accept(WebSocketInfo webSocketInfo) throws Exception {

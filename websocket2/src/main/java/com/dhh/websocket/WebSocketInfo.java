@@ -1,7 +1,7 @@
 package com.dhh.websocket;
 
-import android.support.annotation.Nullable;
 
+import io.reactivex.rxjava3.annotations.Nullable;
 import okhttp3.WebSocket;
 import okio.ByteString;
 

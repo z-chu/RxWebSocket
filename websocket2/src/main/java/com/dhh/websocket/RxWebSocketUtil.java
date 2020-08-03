@@ -3,6 +3,8 @@ package com.dhh.websocket;
 import android.os.SystemClock;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,17 +14,16 @@ import java.util.concurrent.TimeoutException;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.X509TrustManager;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Cancellable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.functions.Predicate;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.core.ObservableOnSubscribe;
+import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Cancellable;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.functions.Predicate;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -58,14 +59,15 @@ public class RxWebSocketUtil {
             throw new RuntimeException("Must be dependency okhttp3 !");
         }
         try {
-            Class.forName("io.reactivex.Observable");
+
+            Class.forName("io.reactivex.rxjava3.core.Observable");
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Must be dependency rxjava 2.x");
+            throw new RuntimeException("Must be dependency rxjava 3.x");
         }
         try {
-            Class.forName("io.reactivex.android.schedulers.AndroidSchedulers");
+            Class.forName("io.reactivex.rxjava3.android.schedulers.AndroidSchedulers");
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("Must be dependency rxandroid 2.x");
+            throw new RuntimeException("Must be dependency rxandroid 3.x");
         }
         observableMap = new ConcurrentHashMap<>();
         webSocketMap = new ConcurrentHashMap<>();
@@ -166,7 +168,7 @@ public class RxWebSocketUtil {
         } else {
             WebSocket webSocket = webSocketMap.get(url);
             if (webSocket != null) {
-                observable = observable.startWith(new WebSocketInfo(webSocket, true));
+                observable = observable.startWithItem(new WebSocketInfo(webSocket, true));
             }
         }
         return observable.observeOn(AndroidSchedulers.mainThread());

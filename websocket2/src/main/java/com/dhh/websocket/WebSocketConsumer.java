@@ -1,9 +1,10 @@
 package com.dhh.websocket;
 
-import android.support.annotation.CallSuper;
 
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+
+import io.reactivex.rxjava3.functions.Consumer;
 import okhttp3.WebSocket;
 import okio.ByteString;
 

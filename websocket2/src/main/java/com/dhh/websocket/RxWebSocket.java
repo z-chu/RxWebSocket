@@ -2,7 +2,7 @@ package com.dhh.websocket;
 
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
+import io.reactivex.rxjava3.core.Observable;
 import okio.ByteString;
 
 /**

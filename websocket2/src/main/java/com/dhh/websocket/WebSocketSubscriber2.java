@@ -1,8 +1,8 @@
 package com.dhh.websocket;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.CallSuper;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -10,11 +10,12 @@ import com.google.gson.JsonSyntaxException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.functions.Function;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 /**
